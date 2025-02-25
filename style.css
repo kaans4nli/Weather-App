@@ -1,0 +1,151 @@
+/* Genel Stiller */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+}
+
+/* Ana Konteyner */
+.container {
+  text-align: center;
+  max-width: 800px;
+  background: white;
+  padding-top: 20px;
+  margin: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Giriş ve Butonlar için Konteyner */
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Butonlar arasındaki boşluk */
+  margin-right: 10px;
+}
+
+/* Giriş Kutusu */
+input {
+  padding: 10px;
+  margin: 10px;
+  width: 70%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+/* Butonlar */
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button i {
+  margin-right: 1px; /* İkon ile metin arasındaki mesafe */
+  font-size: 18px; /* İkon boyutunu ayarlandı */
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+#weatherResult,
+#carouselItems,
+#prevBtn,
+#nextBtn {
+  display: none; /* Başlangıçta gizli */
+}
+
+/* Hava Durumu Kartı */
+.weather-card {
+  padding: 20px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.name {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+/* Sıcaklık, İkon ve Açıklama */
+.weather-description-first {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px; /* temperature ve description arasındaki boşluk */
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+/* Sıcaklık ve Açıklama */
+.temperature {
+  font-size: 36px;
+}
+
+.weather-description-second {
+  font-size: 20px;
+}
+
+/* İkon Ortalaması */
+.weather-icon {
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin-left: 10px; /* Sağdaki açıklama ile mesafe */
+  margin-right: 10px; /* Sol taraftaki sıcaklık ile mesafe */
+}
+
+/* Hava Durumu Kartı Alt Satır (Rüzgar, Nem, Görüş) */
+.weather-details {
+  display: flex;
+  justify-content: center;
+  gap: 30px; /* Aralarındaki boşluğu artırmak için */
+  font-size: 14px;
+  align-items: center;
+}
+
+/* İkonlar için */
+.weather-details i {
+  font-size: 20px;
+  margin-right: 8px; /* İkonlar ile metin arasındaki mesafe */
+}
+
+/* Carousel Butonlarını Düzeltme */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.carouselItem-time {
+  font-size: 12px;
+}
+
+.carouselItem-temp {
+  font-weight: bold;
+}
