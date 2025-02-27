@@ -2,6 +2,39 @@ const apiKey = "7856412eaf46166e825a0cdc45a0a9cc";
 const weatherApiUrl = "https://api.openweathermap.org/data/2.5/weather";
 const hourlyWeatherApiUrl = "https://api.openweathermap.org/data/2.5/forecast";
 
+// Kullanıcının girdiği şehir adına göre hava durumu getir
+function getWeather() {
+  const city = document.getElementById("cityInput").value;
+  if (city === "") {
+    alert("Lütfen bir şehir adı girin!");
+    return;
+  }
+  fetchWeather(
+    `${weatherApiUrl}?q=${city}&units=metric&lang=tr&appid=${apiKey}`
+  );
+  document.getElementById("cityInput").value = "";
+}
+
+// Geolokasyon (Konuma göre hava durumu)
+function getGeoWeather() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        fetchWeather(
+          `${weatherApiUrl}?lat=${lat}&lon=${lon}&units=metric&lang=tr&appid=${apiKey}`
+        );
+      },
+      (error) => {
+        alert("Konum izni verilmedi veya bir hata oluştu.");
+      }
+    );
+  } else {
+    alert("Geolokalizasyon desteklenmiyor!");
+  }
+}
+
 // Hava durumu bilgisini al ve işle
 function fetchWeather(url) {
   fetch(url)
@@ -20,40 +53,17 @@ function fetchWeather(url) {
       // Hava durumu ve saatlik tahminleri göster
       document.getElementById("weatherResult").style.display = "block";
     })
-    .catch((error) => console.error("Hata:", error));
-}
-
-// Kullanıcının girdiği şehir adına göre hava durumu getir
-function getWeather() {
-  const city = document.getElementById("cityInput").value;
-  if (city === "") {
-    alert("Lütfen bir şehir adı girin!");
-    return;
-  }
-  fetchWeather(
-    `${weatherApiUrl}?q=${city}&units=metric&lang=tr&appid=${apiKey}`
-  );
-  document.getElementById("cityInput").value = "";
-}
-
-// Geolokasyon (Konuma göre hava durumu)
-function getGeoWeather() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((position) => {
-      const lat = position.coords.latitude;
-      const lon = position.coords.longitude;
-      fetchWeather(
-        `${weatherApiUrl}?lat=${lat}&lon=${lon}&units=metric&lang=tr&appid=${apiKey}`
+    .catch((error) => {
+      console.error("Hata:", error);
+      alert(
+        "Hava durumu verisi alınırken bir sorun oluştu. Lütfen tekrar deneyin."
       );
     });
-  } else {
-    alert("Geolokalizasyon desteklenmiyor!");
-  }
 }
 
 // Hava durumu bilgilerini ekrana yaz
 function renderWeather(data) {
-  const iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+  const iconUrl = getIconUrl(data.weather[0].icon);
   const weatherHTML = `
     <div class="weather-container text-center">
       <div class="weather-header">
@@ -122,7 +132,7 @@ function updateCarousel() {
 
     const hour = hourlyData[i];
     const time = new Date(hour.dt * 1000).toLocaleTimeString().slice(0, 5);
-    const iconUrl = `https://openweathermap.org/img/wn/${hour.weather[0].icon}.png`;
+    const iconUrl = getIconUrl(hour.weather[0].icon);
     const temp = Math.round(hour.main.temp);
 
     carouselItems += `
@@ -152,4 +162,9 @@ function prevSlide() {
     startIndex--;
     updateCarousel();
   }
+}
+
+// **Hava durumu simgesi URL'sini döndüren yardımcı fonksiyon**
+function getIconUrl(iconCode) {
+  return `https://openweathermap.org/img/wn/${iconCode}.png`;
 }
